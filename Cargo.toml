@@ -1,0 +1,12 @@
+[package]
+name = "ja3probe"
+version = "0.1.0"
+edition = "2021"
+authors = ["Gabriel Biondo <gbiondo@reveng3.io>"]
+license = "MIT"
+description = "JA3/JA4 TLS ClientHello fingerprint extractor — PoC for AitM phishing proxy detection"
+repository = "https://github.com/gb-at-r3/ja3Probe"
+keywords = ["tls", "ja3", "fingerprint", "security", "phishing"]
+categories = ["command-line-utilities", "network-programming"]
+
+[dependencies]
