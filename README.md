@@ -44,34 +44,6 @@ tshark -r capture.pcap -Y 'tls.handshake.type==1' \
   -T fields -e tls.handshake.extensions.supported_version
 ```
 
-## Architecture
-
-```
-Raw bytes ──► TLS Record Parser ──► ClientHello Parser ──► JA3 Extractor
-                                                                │
-                                                          ┌─────▼─────┐
-                                                          │ MD5 Hash  │
-                                                          └─────┬─────┘
-                                                                │
-                                              ┌─────────────────▼─────────────────┐
-                                              │    Fingerprint Database Lookup     │
-                                              │  ┌────────────┬─────────────────┐ │
-                                              │  │ Known Hash │  → Classification│ │
-                                              │  │ Unknown    │  → Heuristics    │ │
-                                              │  └────────────┴─────────────────┘ │
-                                              └───────────────────────────────────┘
-```
-
-## Fingerprint Categories
-
-| Category | Icon | Meaning |
-|----------|------|---------|
-| Real Browser | 🟢 | Standard desktop/mobile browser |
-| Headless Browser | 🟡 | Potential AitM proxy (Puppeteer, Playwright, Docker Chrome) |
-| Automation | 🔴 | Bot framework (Selenium, PhantomJS) |
-| Proxy Infra | 🔴 | Known AitM tooling (Evilginx, Modlishka, Muraena) |
-| CLI Tool | 🟡 | Context-dependent (curl, Python requests) |
-
 ## Zero Dependencies
 
 The PoC is intentionally zero-dependency — it includes a minimal inline MD5 implementation to keep the build self-contained. For production use, swap in the `md5` crate and add `pcap` for live capture.
